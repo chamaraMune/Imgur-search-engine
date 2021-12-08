@@ -2,13 +2,21 @@ import { Component } from "react";
 import { 
 	Container, 
 	Navbar,
-	Row,
-	Col, 
 } from "react-bootstrap";
 import { Images } from "react-bootstrap-icons";
 import ItemSearchBar from "../components/ItemSearchBar";
+import AppAlert from "../components/AppAlert";
 
 class BaseView extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isErrorAlert: true,
+			appAlertTxt: "Error message",
+			appAlertShow: false,
+		};
+	}
+
 	render() {
 		return (
 			<>
@@ -21,19 +29,33 @@ class BaseView extends Component {
 						</Navbar.Brand>
 						<Navbar.Toggle aria-controls="navbarScroll" />
 						<Navbar.Collapse id="navbarScroll">
-							<ItemSearchBar />
+							<ItemSearchBar showAppAlert={this.showAppAlert} />
 						</Navbar.Collapse>
 					</Container>
 				</Navbar>
-				{/* search result container */}
 				<Container>
-					<Row>
-						<Col><h1>Hello world</h1></Col>
-					</Row>
+					{/* Applicaton Alert component */}
+					<AppAlert 
+						isError={this.state.isErrorAlert}
+						msg={this.state.appAlertTxt}
+						show={this.state.appAlertShow}
+					/>
+					{/* search result container */}
 				</Container>
 			</>
-			
 		);
+	}
+
+	showAppAlert = (error, msg = "")  => {
+		this.setState({ 
+			appAlertShow: true,
+			appAlertTxt: msg,
+			isErrorAlert: error
+		}, () => {
+			window.setTimeout(() => {
+				this.setState({ appAlertShow: false});
+			}, 5000);
+		});
 	}
 }
 

@@ -56,6 +56,7 @@ class ItemSearchBar extends Component {
   }
 
   async onSubmitSearchBtn() {
+    const { showAppAlert } = this.props;
     const { query } = this.state;
     if (isEmpty(query)) {
       return;
@@ -65,8 +66,12 @@ class ItemSearchBar extends Component {
     try {
       const response = await imgurClient.getRecentWeeklyImages(query);
       console.log("### response >>> ", response);
+      this.setState({ isSearching: false});
+      showAppAlert(false);
     } catch (error) {
       console.log("### error >>>> ", error);
+      const msg = "Error occurred while searching gallery";
+      showAppAlert(true, msg);
     }
   }
 }
