@@ -14,6 +14,7 @@ class BaseView extends Component {
 			isErrorAlert: true,
 			appAlertTxt: "Error message",
 			appAlertShow: false,
+			dataset: []
 		};
 	}
 
@@ -29,7 +30,9 @@ class BaseView extends Component {
 						</Navbar.Brand>
 						<Navbar.Toggle aria-controls="navbarScroll" />
 						<Navbar.Collapse id="navbarScroll">
-							<ItemSearchBar showAppAlert={this.showAppAlert} />
+							<ItemSearchBar 
+								showAppAlert={this.showAppAlert} 
+								setQueryData={this.setQueryData}/>
 						</Navbar.Collapse>
 					</Container>
 				</Navbar>
@@ -57,6 +60,10 @@ class BaseView extends Component {
 			}, 5000);
 		});
 	}
+
+	setQueryData = (dataset = []) => {
+		this.setState({ dataset });
+	};
 }
 
 export default BaseView;

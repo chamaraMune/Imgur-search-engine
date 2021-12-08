@@ -26,17 +26,16 @@ class ImgurAdapter {
       const parsedResponse = this.parseApiResponse(response);
       return parsedResponse;
     } catch (error) {
-      console.log("### error >>> ", error);
       // simplified way: status 400-499 range also considered 500 here;
       return { error: true, data: [], status: 500 };
     }
   }
 
   parseApiResponse(response) {
-    const { data, success, status } = response;
+    const { data: payload, success, status } = response;
     const parsedRes = {
       error: success || false,
-      data: data || [],
+      data: payload.data || [],
       status: status || 200
     };
     return parsedRes;
