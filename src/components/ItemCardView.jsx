@@ -40,7 +40,7 @@ class ItemCardView extends Component {
     };
     return (
       <>
-        <Card style={{ width: '18rem', height: "35rem" }}>
+        <Card style={{ width: '18rem', height: "35rem", marginBlock: "10px"}}>
             <Card.Img 
               variant="top" 
               src={this.state.imageURL}  

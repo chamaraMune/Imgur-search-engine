@@ -2,6 +2,8 @@ import { Component } from "react";
 import { 
 	Container, 
 	Navbar,
+	Row,
+	Col
 } from "react-bootstrap";
 import { Images } from "react-bootstrap-icons";
 import ItemSearchBar from "../components/ItemSearchBar";
@@ -24,30 +26,68 @@ class BaseView extends Component {
 	render() {
 		return (
 			<>
-				{/* Navigation bar container */}
-				<Navbar bg="primary" variant="dark" expand="lg">
-					<Container>
-						<Navbar.Brand href="#">
-							<Images/>
-							<span>{" "}Imgur Search Engine</span>
-						</Navbar.Brand>
-						<Navbar.Toggle aria-controls="navbarScroll" />
-						<Navbar.Collapse id="navbarScroll">
-							<ItemSearchBar 
-								showAppAlert={this.showAppAlert} 
-								setQueryData={this.setQueryData}
-								setQuery={this.setQueryString}/>
-						</Navbar.Collapse>
-					</Container>
-				</Navbar>
+				{this.topNavBarComponent()}
+				{this.appAlertBar()}
+				{this.pageContentContainer()}
+			</>
+		);
+	}
+
+	topNavBarComponent = () => {
+		return (
+			<>
 				<Container>
-					{/* Applicaton Alert component */}
-					<AppAlert 
-						isError={this.state.isErrorAlert}
-						msg={this.state.appAlertTxt}
-						show={this.state.appAlertShow}
-					/>
-					{/* search result container */}
+					<Row>
+						<Col>
+							<Navbar 
+								bg="primary" 
+								variant="dark" 
+								expand="md" 
+								style={{
+									zIndex:1000,
+									position: "relative",
+									width: "autho",
+								}}>
+								<Container>
+									<Navbar.Brand href="#">
+										<Images/>
+										<span>{" "}Imgur Search Engine</span>
+									</Navbar.Brand>
+									<Navbar.Toggle aria-controls="navbarScroll" />
+									<Navbar.Collapse id="navbarScroll">
+										<ItemSearchBar 
+											showAppAlert={this.showAppAlert} 
+											setQueryData={this.setQueryData}
+											setQuery={this.setQueryString}/>
+									</Navbar.Collapse>
+								</Container>
+							</Navbar>
+						</Col>
+					</Row>
+				</Container>
+			</>
+		);
+	};
+
+	appAlertBar = () => {
+		return (
+			<>
+				<Container>
+					<Row>
+						<AppAlert 
+							isError={this.state.isErrorAlert}
+							msg={this.state.appAlertTxt}
+							show={this.state.appAlertShow}
+						/>
+					</Row>
+				</Container>
+			</>
+		);
+	};
+
+	pageContentContainer = () => {
+		return (<>
+			<Container>
 					{this.state.didExecutedQuery && (
 						<GridView 
 							inputData={this.state.dataset}
@@ -55,9 +95,8 @@ class BaseView extends Component {
 						/>
 					)}
 				</Container>
-			</>
-		);
-	}
+		</>);
+	};
 
 	showAppAlert = (error, msg = "")  => {
 		this.setState({ 
