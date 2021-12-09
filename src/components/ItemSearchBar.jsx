@@ -56,7 +56,7 @@ class ItemSearchBar extends Component {
   }
 
   async onSubmitSearchBtn() {
-    const { showAppAlert, setQueryData } = this.props;
+    const { showAppAlert, setQueryData, setQuery } = this.props;
     const { query } = this.state;
     if (isEmpty(query)) {
       return;
@@ -71,8 +71,11 @@ class ItemSearchBar extends Component {
       }
       const newDataset = (error && []) || data;
       setQueryData(newDataset);
+      setQuery(query);
       this.setState({ isSearching: false});
-      showAppAlert(false);
+      if (!isEmpty(newDataset)) {
+        showAppAlert(false);
+      }
     } catch (error) {
       const msg = "Error occurred while searching gallery";
       showAppAlert(true, msg);

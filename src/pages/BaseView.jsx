@@ -6,6 +6,7 @@ import {
 import { Images } from "react-bootstrap-icons";
 import ItemSearchBar from "../components/ItemSearchBar";
 import AppAlert from "../components/AppAlert";
+import GridView from "../components/GridView";
 
 class BaseView extends Component {
 	constructor(props) {
@@ -14,7 +15,9 @@ class BaseView extends Component {
 			isErrorAlert: true,
 			appAlertTxt: "Error message",
 			appAlertShow: false,
-			dataset: []
+			dataset: [],
+			query: "",
+			didExecutedQuery: false
 		};
 	}
 
@@ -32,7 +35,8 @@ class BaseView extends Component {
 						<Navbar.Collapse id="navbarScroll">
 							<ItemSearchBar 
 								showAppAlert={this.showAppAlert} 
-								setQueryData={this.setQueryData}/>
+								setQueryData={this.setQueryData}
+								setQuery={this.setQueryString}/>
 						</Navbar.Collapse>
 					</Container>
 				</Navbar>
@@ -44,6 +48,12 @@ class BaseView extends Component {
 						show={this.state.appAlertShow}
 					/>
 					{/* search result container */}
+					{this.state.didExecutedQuery && (
+						<GridView 
+							inputData={this.state.dataset}
+							query={this.state.queryString}
+						/>
+					)}
 				</Container>
 			</>
 		);
@@ -64,6 +74,13 @@ class BaseView extends Component {
 	setQueryData = (dataset = []) => {
 		this.setState({ dataset });
 	};
+
+	setQueryString = (value = "") => {
+		this.setState({
+			queryString: value,
+			didExecutedQuery: true
+		});
+	}
 }
 
 export default BaseView;

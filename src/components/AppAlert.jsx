@@ -3,18 +3,7 @@ import { Row, Col, Alert, Fade } from "react-bootstrap";
 import { EmojiSmile, EmojiFrown } from "react-bootstrap-icons"
 
 class AppAlert extends Component {
-  constructor(props) {
-    console.log("### ALERT compo props ", props);
-      super(props);
-      this.state = {
-      };
-      console.log("### AppAlert >>>> this.state >>> ", this.state);
-  }
-
-  componentDidMount() {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-  }
-
+  
   render() {
     const { isError, show } = this.props;
     return (
