@@ -102,7 +102,7 @@ class ItemCardView extends Component {
           </Card.Body>
           <Card.Footer 
             style={{
-              background: `linear-gradient(180deg, #f4f5f9, #d9f8ffa1)`
+              background: `linear-gradient(180  deg, #f4f5f9, #d9f8ffa1)`
             }}>
             <Row>
               <Col><HandThumbsUpFill/>{` ${upVotes}`}</Col>

@@ -19,7 +19,8 @@ class BaseView extends Component {
 			appAlertShow: false,
 			dataset: [],
 			query: "",
-			didExecutedQuery: false
+			didExecutedQuery: false,
+			isCheckedResult: false
 		};
 	}
 
@@ -34,13 +35,14 @@ class BaseView extends Component {
 	}
 
 	topNavBarComponent = () => {
+		const { isCheckedResult } =this.state;
 		return (
 			<>
 				<Container>
 					<Row>
 						<Col>
 							<Navbar 
-								bg="secondary" 
+								bg="primary" 
 								variant="dark" 
 								expand="md" 
 								style={{
@@ -58,7 +60,10 @@ class BaseView extends Component {
 										<ItemSearchBar 
 											showAppAlert={this.showAppAlert} 
 											setQueryData={this.setQueryData}
-											setQuery={this.setQueryString}/>
+											setQuery={this.setQueryString}
+											isCheckedResult={isCheckedResult}
+											onChangeRadioInput={this.onChangeRadioInput}
+										/>
 									</Navbar.Collapse>
 								</Container>
 							</Navbar>
@@ -119,6 +124,15 @@ class BaseView extends Component {
 			queryString: value,
 			didExecutedQuery: true
 		});
+	}
+
+	isActiveSummeryData = () => {
+		return this.state.isCheckedResult;
+	};
+	
+	onChangeRadioInput = (e) => {
+		const { isCheckedResult: value } = this.state;
+		this.setState({ isCheckedResult: !value });
 	}
 }
 

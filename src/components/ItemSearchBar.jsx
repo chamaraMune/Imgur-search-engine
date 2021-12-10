@@ -3,7 +3,7 @@ import {
   InputGroup, 
   FormControl, 
   Button,
-  Spinner 
+  Spinner,
 } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { isEmpty  } from "lodash";
@@ -21,39 +21,47 @@ class ItemSearchBar extends Component {
   }
 
   render() {
+    console.log("#### this.props >>> xxx ", this.props);
+    const { isCheckedResult, onChangeRadioInput } = this.props;
     const { isSearching } = this.state;
     return (
-      <InputGroup>
-        <FormControl
-          type="search"
-          placeholder="Search"
-          className="me-2"
-          aria-label="Search"
-          disabled={this.state.isSearching}
-          value={this.state.query}
-          onChange={this.handleChange}
-          onKeyDown={(e) => {
-            const { key } = e;
-            if (key && key === "Enter") {
-              return this.onSubmitSearchBtn(e);
-            }
-          }}
-        />
-        <Button 
-          variant="secondary" 
-          disabled={isSearching}
-          onClick={this.onSubmitSearchBtn}
-          >
-            {(isSearching ? 
-              (<Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />) : (<Search/>))}
-        </Button>
-      </InputGroup>    
+      <>
+        <InputGroup>
+          <InputGroup.Checkbox 
+            checked={isCheckedResult}
+            onChange={onChangeRadioInput}
+          />
+          <FormControl
+            type="search"
+            placeholder="Search"
+            className="me-2"
+            aria-label="Search"
+            disabled={this.state.isSearching}
+            value={this.state.query}
+            onChange={this.handleChange}
+            onKeyDown={(e) => {
+              const { key } = e;
+              if (key && key === "Enter") {
+                return this.onSubmitSearchBtn(e);
+              }
+            }}
+          />
+          <Button 
+            variant="primary" 
+            disabled={isSearching}
+            onClick={this.onSubmitSearchBtn}
+            >
+              {(isSearching ? 
+                (<Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />) : (<Search/>))}
+          </Button><br/>
+        </InputGroup>
+      </>
     );
   }
 
