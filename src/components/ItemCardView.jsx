@@ -58,7 +58,6 @@ class ItemCardView extends Component {
       borderRadius: 10,
       width: 'auto',
       height: '20rem',
-      background: `linear-gradient(90deg, #f4f5f9, #d9f8ffa1)`
     };
 
     return (
@@ -67,7 +66,8 @@ class ItemCardView extends Component {
           style={{ 
             width: '18rem', 
             height: "35rem", 
-            marginBlock: "10px"
+            marginBlock: "10px",
+            background: `linear-gradient(90deg, #f4f5f9, #d9f8ffa1)`
           }}
           border="dark"
         >
@@ -102,7 +102,7 @@ class ItemCardView extends Component {
           </Card.Body>
           <Card.Footer 
             style={{
-              background: `linear-gradient(90deg, #cfd9df, #e2ebf0)`
+              background: `linear-gradient(180deg, #f4f5f9, #d9f8ffa1)`
             }}>
             <Row>
               <Col><HandThumbsUpFill/>{` ${upVotes}`}</Col>
