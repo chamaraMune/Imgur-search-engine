@@ -9,6 +9,7 @@ import { Camera } from "react-bootstrap-icons";
 import ItemSearchBar from "../components/ItemSearchBar";
 import AppAlert from "../components/AppAlert";
 import GridView from "../components/GridView";
+import SummeryView from "../components/SummeryView";
 
 class BaseView extends Component {
 	constructor(props) {
@@ -19,7 +20,7 @@ class BaseView extends Component {
 			appAlertShow: false,
 			dataset: [],
 			query: "",
-			didExecutedQuery: false,
+			isSeaching: false,
 			isCheckedResult: false
 		};
 	}
@@ -63,6 +64,7 @@ class BaseView extends Component {
 											setQuery={this.setQueryString}
 											isCheckedResult={isCheckedResult}
 											onChangeRadioInput={this.onChangeRadioInput}
+											setIsSearching={this.setIsSearching}
 										/>
 									</Navbar.Collapse>
 								</Container>
@@ -91,16 +93,26 @@ class BaseView extends Component {
 	};
 
 	pageContentContainer = () => {
-		return (<>
+		const { 
+			isSeaching,  
+			isCheckedResult: shouldViewSummery,
+			dataset,
+			query 
+		} = this.state;
+
+		const contentPrpos = { inputData: dataset, query};
+		return (
 			<Container>
-					{this.state.didExecutedQuery && (
-						<GridView 
-							inputData={this.state.dataset}
-							query={this.state.queryString}
-						/>
-					)}
-				</Container>
-		</>);
+				{
+					!isSeaching 
+					&& (
+						!shouldViewSummery
+						? <GridView {...contentPrpos} />
+						: <SummeryView inputData={dataset} />
+					)
+				}
+			</Container>
+		);
 	};
 
 	showAppAlert = (error, msg = "")  => {
@@ -120,11 +132,8 @@ class BaseView extends Component {
 	};
 
 	setQueryString = (value = "") => {
-		this.setState({
-			queryString: value,
-			didExecutedQuery: true
-		});
-	}
+		this.setState({ query: value, });
+	};
 
 	isActiveSummeryData = () => {
 		return this.state.isCheckedResult;
@@ -133,6 +142,10 @@ class BaseView extends Component {
 	onChangeRadioInput = (e) => {
 		const { isCheckedResult: value } = this.state;
 		this.setState({ isCheckedResult: !value });
+	}
+
+	setIsSearching = (value = false) => {
+		this.setState({ isSeaching : value })
 	}
 }
 

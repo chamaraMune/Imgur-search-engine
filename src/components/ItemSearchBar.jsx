@@ -21,7 +21,6 @@ class ItemSearchBar extends Component {
   }
 
   render() {
-    console.log("#### this.props >>> xxx ", this.props);
     const { isCheckedResult, onChangeRadioInput } = this.props;
     const { isSearching } = this.state;
     return (
@@ -70,13 +69,19 @@ class ItemSearchBar extends Component {
   }
 
   async onSubmitSearchBtn() {
-    const { showAppAlert, setQueryData, setQuery } = this.props;
+    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP")
+    const { 
+      showAppAlert, 
+      setQueryData, 
+      setQuery, 
+      setIsSearching 
+    } = this.props;
     const { query } = this.state;
     if (isEmpty(query)) {
       return;
     }
-
     this.setState({ isSearching: true });
+    setIsSearching(true);
     try {
       const response = await imgurClient.getRecentWeeklyImages(query);
       const { error, data } = response;
@@ -85,8 +90,11 @@ class ItemSearchBar extends Component {
       }
       const newDataset = (error && []) || data;
       setQueryData(newDataset);
+      console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
       setQuery(query);
+      console.log("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
       this.setState({ isSearching: false});
+      setIsSearching(false);
       if (!isEmpty(newDataset)) {
         showAppAlert(false);
       }

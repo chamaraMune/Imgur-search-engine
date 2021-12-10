@@ -12,6 +12,10 @@ class GridView extends Component {
         dataset: [],
         itemsPerRow: 4,
         dateTimeFormat: "DD/MM/YYYY h:mm a",
+        viewport: {
+          width: document.documentElement.clientWidth,
+          height: document.documentElement.clientHeight,
+        },
     };
   }
   
@@ -30,17 +34,24 @@ class GridView extends Component {
   };
 
   noResultComponent = () => {
+    const { viewport } = this.state;
     const containerStyle = {
       display: 'flex',  
       justifyContent:'center', 
       alignItems:'center',
     };
+    const imgStyle = {
+      width: viewport.width >= 768 ? "800px" : "400px",
+      height: "auto",
+    };
     return (
       <>
         <Container style={containerStyle} as="div">
-          <Row xs={5}>
-            <Col xs={5}>
-              <Image src={'/notFound.jpg'}/>
+          <Row xs={1}>
+            <Col xs={1}>
+              <Image 
+                style={imgStyle} 
+                src={'/searchresult.png'}/>
             </Col>
           </Row>
         </Container>
