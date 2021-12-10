@@ -17,7 +17,7 @@ class ImgurAdapter {
       httpRequest.addHeader("Authorization", `Client-ID ${this.IMGUR_CLIENT_ID}`);
       const queryParams = {
           window: "week",
-          q: query,
+          q: query.toLowerCase(),
           sort,
           page: 1
       };

@@ -23,9 +23,9 @@ class GridRow extends Component {
   };
 
   getListItems = () => {
-    const { data, columns, rowId, moment, timeformat } = this.props;
+    const { data, rowId, moment, timeformat } = this.props;
     const listItems = [];
-    for (let i = 0; i < columns; i++) {
+    for (let i = 0; i < data.length; i++) {
       const columnId = `${rowId}-col-${i}`;
       const dataObj = data[i];
       const { id: elementId } = dataObj;

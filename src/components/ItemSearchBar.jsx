@@ -32,6 +32,12 @@ class ItemSearchBar extends Component {
           disabled={this.state.isSearching}
           value={this.state.query}
           onChange={this.handleChange}
+          onKeyDown={(e) => {
+            const { key } = e;
+            if (key && key === "Enter") {
+              return this.onSubmitSearchBtn(e);
+            }
+          }}
         />
         <Button 
           variant="primary" 
