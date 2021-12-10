@@ -5,7 +5,7 @@ import {
 	Row,
 	Col
 } from "react-bootstrap";
-import { Images } from "react-bootstrap-icons";
+import { Camera } from "react-bootstrap-icons";
 import ItemSearchBar from "../components/ItemSearchBar";
 import AppAlert from "../components/AppAlert";
 import GridView from "../components/GridView";
@@ -40,20 +40,20 @@ class BaseView extends Component {
 					<Row>
 						<Col>
 							<Navbar 
-								bg="primary" 
+								bg="secondary" 
 								variant="dark" 
 								expand="md" 
 								style={{
 									zIndex:1000,
 									position: "relative",
-									width: "autho",
+									width: "auto",
 								}}>
 								<Container>
 									<Navbar.Brand href="#">
-										<Images/>
+										<Camera style={{ fontSize: "1.5em" }}/>
 										<span>{" "}Imgur Search Engine</span>
 									</Navbar.Brand>
-									<Navbar.Toggle aria-controls="navbarScroll" />
+									<Navbar.Toggle aria-controls="navbarScroll"/>
 									<Navbar.Collapse id="navbarScroll">
 										<ItemSearchBar 
 											showAppAlert={this.showAppAlert} 

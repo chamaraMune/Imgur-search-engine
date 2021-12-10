@@ -40,7 +40,7 @@ class ItemSearchBar extends Component {
           }}
         />
         <Button 
-          variant="primary" 
+          variant="secondary" 
           disabled={isSearching}
           onClick={this.onSubmitSearchBtn}
           >
