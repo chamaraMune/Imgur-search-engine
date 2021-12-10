@@ -3,7 +3,7 @@ import {
   InputGroup, 
   FormControl, 
   Button,
-  Spinner 
+  Spinner,
 } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { isEmpty  } from "lodash";
@@ -21,33 +21,46 @@ class ItemSearchBar extends Component {
   }
 
   render() {
+    const { isCheckedResult, onChangeRadioInput } = this.props;
     const { isSearching } = this.state;
     return (
-      <InputGroup>
-        <FormControl
-          type="search"
-          placeholder="Search"
-          className="me-2"
-          aria-label="Search"
-          disabled={this.state.isSearching}
-          value={this.state.query}
-          onChange={this.handleChange}
-        />
-        <Button 
-          variant="primary" 
-          disabled={isSearching}
-          onClick={this.onSubmitSearchBtn}
-          >
-            {(isSearching ? 
-              (<Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />) : (<Search/>))}
-        </Button>
-      </InputGroup>    
+      <>
+        <InputGroup>
+          <InputGroup.Checkbox 
+            checked={isCheckedResult}
+            onChange={onChangeRadioInput}
+          />
+          <FormControl
+            type="search"
+            placeholder="Search"
+            className="me-2"
+            aria-label="Search"
+            disabled={this.state.isSearching}
+            value={this.state.query}
+            onChange={this.handleChange}
+            onKeyDown={(e) => {
+              const { key } = e;
+              if (key && key === "Enter") {
+                return this.onSubmitSearchBtn(e);
+              }
+            }}
+          />
+          <Button 
+            variant="primary" 
+            disabled={isSearching}
+            onClick={this.onSubmitSearchBtn}
+            >
+              {(isSearching ? 
+                (<Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />) : (<Search/>))}
+          </Button><br/>
+        </InputGroup>
+      </>
     );
   }
 
@@ -56,17 +69,38 @@ class ItemSearchBar extends Component {
   }
 
   async onSubmitSearchBtn() {
+    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP")
+    const { 
+      showAppAlert, 
+      setQueryData, 
+      setQuery, 
+      setIsSearching 
+    } = this.props;
     const { query } = this.state;
     if (isEmpty(query)) {
       return;
     }
-
     this.setState({ isSearching: true });
+    setIsSearching(true);
     try {
       const response = await imgurClient.getRecentWeeklyImages(query);
-      console.log("### response >>> ", response);
+      const { error, data } = response;
+      if (error) {
+        throw new Error("error occurred");
+      }
+      const newDataset = (error && []) || data;
+      setQueryData(newDataset);
+      console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+      setQuery(query);
+      console.log("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
+      this.setState({ isSearching: false});
+      setIsSearching(false);
+      if (!isEmpty(newDataset)) {
+        showAppAlert(false);
+      }
     } catch (error) {
-      console.log("### error >>>> ", error);
+      const msg = "Error occurred while searching gallery";
+      showAppAlert(true, msg);
     }
   }
 }

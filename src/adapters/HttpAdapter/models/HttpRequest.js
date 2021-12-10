@@ -3,8 +3,6 @@ import { isAllowedMethod } from "./HttpMethod";
 export default class HttpRequest {
   constructor(method, resoureURL) {
     const isValidMethod = isAllowedMethod(method);
-    console.log("#### isValidMethod >>> ", isValidMethod);
-
     if (!isValidMethod) {
       throw new Error("Invalid Http Method Provided");
     }

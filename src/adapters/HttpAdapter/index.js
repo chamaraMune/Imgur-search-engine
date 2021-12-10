@@ -13,7 +13,6 @@ class HttpAdapter {
         headers,
         params: queryParams
       };
-      console.log("#### HttpAdapter >>>> request >>>>> ");
       let response = null;
       switch (method) {
         case GET:
